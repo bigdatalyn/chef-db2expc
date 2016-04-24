@@ -16,8 +16,9 @@
 
 # default attributes
 default['db2']['working_dir']                 = ::File.join(Chef::Config[:file_cache_path], 'db2')
-default['db2']['installer_url']               = nil
 default['db2']['version']                     = '10.5'
+default['db2']['installer_url']               = nil
+default['db2']['installer_file']              = 'v' + node['db2']['version'] + '_linuxx64_expc.tar.gz'
 default['db2']['installer_log']               = '/tmp/db2setup.log'
 default['db2']['db2_home']                    = '/opt/ibm/db2/V' + node['db2']['version']
 default['db2']['language']                    = 'EN'

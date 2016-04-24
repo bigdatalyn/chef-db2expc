@@ -14,40 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# ------------------------------------------------------
-# Check required attribute.
-# ------------------------------------------------------
 unless node['db2']['installer_url']
   Chef::Application.fatal!("The installer url attribute is required.")
 end
 
-installer_url = node['db2']['installer_url']
+installer_file = node['db2']['installer_file']
 work_dir      = node['db2']['working_dir']
 response_file = "#{work_dir}/db2expc.rsp"
 
-# ------------------------------------------------------
-# Install required module.
-# ------------------------------------------------------
-package 'libstdc++.so.5'
-package 'libaio.so.1'
-package 'libstdc++.so.6'
-package 'pam.i686'
+package 'libstdc++'
 package 'libaio'
 package 'libaio-devel'
-package 'sg3_utils'
 
-# ------------------------------------------------------
-# Install DB2 Express-C.
-# ------------------------------------------------------
 directory "#{work_dir}" do
   action :create
-end
-
-execute 'install-db2' do
-  action :nothing
-  command <<-EOH
-    #{work_dir}/expc/db2setup -r #{response_file} -l #{node['db2']['installer_log']}
-  EOH
 end
 
 template "#{response_file}" do
@@ -56,23 +36,31 @@ template "#{response_file}" do
   mode "0644"
 end
 
-ark "expc" do 
-  url "#{installer_url}"
-  path "#{work_dir}"
+execute 'install' do
+  action :nothing
+  command <<-EOH
+    #{work_dir}/expc/db2setup -r #{response_file} -l #{node['db2']['installer_log']}
+  EOH
+end
+
+execute 'extract' do
+  action :nothing
+  command <<-EOH
+    tar zxvf #{work_dir}/#{installer_file} -C #{work_dir}
+  EOH
+end
+
+remote_file File.join(work_dir, installer_file) do
+  source node['db2']['installer_url']
   owner 'root'
   group 'root'
-  action :put 
-  notifies :run, "execute[install-db2]", :immediately
+  mode '0755'
+  not_if "test -e #{work_dir}/#{installer_file}"
+  notifies :run, "execute[extract]", :immediately
+  notifies :run, "execute[install]", :immediately
 end
 
-# ------------------------------------------------------
-# Delete tmp file.
-# ------------------------------------------------------
 directory "#{work_dir}" do
   recursive true
-  action :delete
-end
-
-file "#{Chef::Config[:file_cache_path]}/expc.tar.gz" do
   action :delete
 end
