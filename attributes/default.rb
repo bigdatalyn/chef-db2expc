@@ -26,23 +26,23 @@ default['db2']['install_type']                = 'CUSTOM'
 
 default['db2']['instance']['prefix']          = 'DB2_INST'
 default['db2']['instance']['name']            = 'db2inst1'
-default['db2']['instance']['uid']             = 1004
+default['db2']['instance']['uid']             = nil
 default['db2']['instance']['group']           = 'db2iadm1'
-default['db2']['instance']['gid']             = 999
+default['db2']['instance']['gid']             = nil
 default['db2']['instance']['home']            = '/home/' + node['db2']['instance']['name']
 default['db2']['instance']['password']        = 'db2inst1'
 default['db2']['instance']['port']            = 50000
 
 default['db2']['instance']['fenced_name']     = 'db2fenc1'
-default['db2']['instance']['fenced_uid']      = 1003
+default['db2']['instance']['fenced_uid']      = nil
 default['db2']['instance']['fenced_group']    = 'db2fsdm1'
-default['db2']['instance']['fenced_gid']      = 998
+default['db2']['instance']['fenced_gid']      = nil
 default['db2']['instance']['fenced_home']     = '/home/' + node['db2']['instance']['fenced_name']
 default['db2']['instance']['fenced_password'] = 'db2fenc1'
 
 default['db2']['das_name']                    = 'dasusr1'
-default['db2']['das_uid']                     = 1002
+default['db2']['das_uid']                     = nil
 default['db2']['das_group']                   = 'dasadm1'
-default['db2']['das_gid']                     = 997
+default['db2']['das_gid']                     = nil
 default['db2']['das_home']                    = '/home/' + node['db2']['das_name']
 default['db2']['das_password']                = 'dasusr1'
