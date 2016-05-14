@@ -39,14 +39,8 @@ end
 execute 'install' do
   action :nothing
   command <<-EOH
-    #{work_dir}/expc/db2setup -r #{response_file} -l #{node['db2']['installer_log']}
-  EOH
-end
-
-execute 'extract' do
-  action :nothing
-  command <<-EOH
     tar zxvf #{work_dir}/#{installer_file} -C #{work_dir}
+    #{work_dir}/expc/db2setup -r #{response_file} -l #{node['db2']['installer_log']}
   EOH
 end
 
@@ -56,7 +50,6 @@ remote_file File.join(work_dir, installer_file) do
   group 'root'
   mode '0755'
   not_if "test -e #{work_dir}/#{installer_file}"
-  notifies :run, "execute[extract]", :immediately
   notifies :run, "execute[install]", :immediately
 end
 

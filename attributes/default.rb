@@ -23,6 +23,7 @@ default['db2']['installer_log']               = '/tmp/db2setup.log'
 default['db2']['db2_home']                    = '/opt/ibm/db2/V' + node['db2']['version']
 default['db2']['language']                    = 'EN'
 default['db2']['install_type']                = 'CUSTOM'
+default['db2']['sample_database']             = 'true'
 
 default['db2']['instance']['prefix']          = 'DB2_INST'
 default['db2']['instance']['name']            = 'db2inst1'
@@ -46,3 +47,7 @@ default['db2']['das_group']                   = 'dasadm1'
 default['db2']['das_gid']                     = nil
 default['db2']['das_home']                    = '/home/' + node['db2']['das_name']
 default['db2']['das_password']                = 'dasusr1'
+
+default['db2']['database']['name']            = nil
+default['db2']['database']['codeset']         = 'UTF-8'
+default['db2']['database']['territory']       = 'JP'

@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: db2
-# Recipe:: default
+# Recipe:: createdb
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe 'db2::install'
-include_recipe 'db2::createdb'
-include_recipe 'db2::autostart'
+instance = node['db2']['instance']
+db = node['db2']['database']
+
+execute 'db2sampl' do
+  only_if { node['db2']['sample_database'] == 'true' }
+  command <<-EOH
+    su - #{instance['name']} -l -c 'db2sampl'
+  EOH
+end
+
+execute 'createdb' do
+  only_if { not db['name'].nil? }
+  command <<-EOH
+    su - #{instance['name']} -l -c 'db2 create db #{db['name']} using codeset #{db['codeset']} territory #{db['territory']}'
+  EOH
+end
