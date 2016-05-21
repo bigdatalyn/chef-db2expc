@@ -18,13 +18,15 @@ unless node['db2']['installer_url']
   Chef::Application.fatal!("The installer url attribute is required.")
 end
 
-installer_file = node['db2']['installer_file']
-work_dir      = node['db2']['working_dir']
-response_file = "#{work_dir}/db2expc.rsp"
+include_recipe 'selinux::permissive'
 
-package 'libstdc++'
-package 'libaio'
-package 'libaio-devel'
+installer_file = node['db2']['installer_file']
+work_dir       = node['db2']['working_dir']
+response_file  = "#{work_dir}/db2expc.rsp"
+
+package [ "libstdc++", "libaio", "pam", "cpp", "gcc", "gcc-c++", "kernel-devel", "sg3_utils", "ksh" ] do
+  action :install
+end
 
 directory "#{work_dir}" do
   action :create

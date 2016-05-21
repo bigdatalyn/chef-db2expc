@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-case node['platform_family']
-when 'rhel'
+case node['platform']
+when 'redhat'
   if node['platform_version'].to_i == 7 then
     template "/etc/systemd/system/db2fmcd.service" do
       owner 'root'

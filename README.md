@@ -5,7 +5,7 @@ Requirements
 Chef 12+
 
 #### platforms
-- Red Hat Enterprise Linux 7
+- Red Hat Enterprise Linux 6 / 7
 
 Attributes
 ----------
