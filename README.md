@@ -192,4 +192,4 @@ Usage
 #### Berksfile
     source "https://api.berkshelf.com/"
     
-    cookbook "db2"  , github: "kayu28/chef-db2"
+    cookbook "db2"  , github: "kayu28/chef-db2expc"
