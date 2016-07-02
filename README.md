@@ -2,11 +2,15 @@
 
 Requirements
 ------------
-Chef 12+
+#### Chef
+- Chef 12+
 
 #### platforms
 - Red Hat Enterprise Linux 6 / 7
-- Ubuntu 14.04 LTS
+- Ubuntu 14.04
+
+#### Cookbooks
+- selinux
 
 Attributes
 ----------
