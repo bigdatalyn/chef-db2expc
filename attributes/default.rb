@@ -21,9 +21,9 @@ default['db2']['installer_url']               = nil
 default['db2']['installer_file']              = 'v' + node['db2']['version'] + '_linuxx64_expc.tar.gz'
 default['db2']['installer_log']               = '/tmp/db2setup.log'
 default['db2']['db2_home']                    = '/opt/ibm/db2/V' + node['db2']['version']
-default['db2']['language']                    = 'EN'
+default['db2']['language']                    = nil
 default['db2']['install_type']                = 'CUSTOM'
-default['db2']['sample_database']             = 'true'
+default['db2']['sample_database']             = 'false'
 
 default['db2']['instance']['prefix']          = 'DB2_INST'
 default['db2']['instance']['name']            = 'db2inst1'

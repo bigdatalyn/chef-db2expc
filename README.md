@@ -6,6 +6,7 @@ Chef 12+
 
 #### platforms
 - Red Hat Enterprise Linux 6 / 7
+- Ubuntu 14.04 LTS
 
 Attributes
 ----------
@@ -44,7 +45,7 @@ Attributes
   <tr>
     <td><tt>['db2']['language']</tt></td>
     <td>String</td>
-    <td><tt>EN</tt></td>
+    <td><tt>nil</tt></td>
   </tr>
   <tr>
     <td><tt>['db2']['install_type']</tt></td>
@@ -54,7 +55,7 @@ Attributes
   <tr>
     <td><tt>['db2']['sample_database']</tt></td>
     <td>Boolean</td>
-    <td><tt>true</tt></td>
+    <td><tt>false</tt></td>
   </tr>
 </table>
 

@@ -15,5 +15,5 @@
 # limitations under the License.
 
 include_recipe 'db2::install'
-include_recipe 'db2::createdb'
 include_recipe 'db2::autostart'
+include_recipe 'db2::createdb'
