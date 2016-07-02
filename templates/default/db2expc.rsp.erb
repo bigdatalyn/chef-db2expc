@@ -61,5 +61,5 @@ DAS_PASSWORD              = <%= node['db2']['das_password'] %>
 
 ** Global Profile Registry Settings
 ** ---------------------------------------
-DB2CODEPAGE               =    1208
-DB2COMM                   =    TCPIP
+DB2CODEPAGE               = <%= node['db2']['codepage'] %>
+DB2COMM                   = TCPIP

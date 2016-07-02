@@ -7,7 +7,7 @@ Requirements
 
 #### platforms
 - Red Hat Enterprise Linux 6 / 7
-- Ubuntu 14.04
+- Ubuntu 12.04+
 
 #### Cookbooks
 - selinux
@@ -47,9 +47,19 @@ Attributes
     <td><tt>/tmp/db2setup.log</tt></td>
   </tr>
   <tr>
+    <td><tt>['db2']['nlpack_url']</tt></td>
+    <td>String</td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
     <td><tt>['db2']['language']</tt></td>
     <td>String</td>
     <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['db2']['codepage']</tt></td>
+    <td>Integer</td>
+    <td><tt>1208</tt></td>
   </tr>
   <tr>
     <td><tt>['db2']['install_type']</tt></td>
