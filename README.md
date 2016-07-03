@@ -11,6 +11,7 @@ Requirements
 
 #### Cookbooks
 - selinux
+- ntp
 
 Attributes
 ----------
