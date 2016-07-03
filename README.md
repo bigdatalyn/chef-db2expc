@@ -39,7 +39,7 @@ Attributes
   <tr>
     <td><tt>['db2']['version']</tt></td>
     <td>String</td>
-    <td><tt>10.5</tt></td>
+    <td><tt>11.1</tt></td>
   </tr>
   <tr>
     <td><tt>['db2']['installer_log']</tt></td>

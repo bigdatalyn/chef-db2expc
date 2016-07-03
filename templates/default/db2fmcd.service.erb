@@ -1,8 +1,8 @@
 [Unit]
-Description=DB2V105
+Description=DB2V<%= node['db2']['version'] %>
 
 [Service]
-ExecStart=/opt/ibm/db2/V10.5/bin/db2fmcd
+ExecStart=<%= node['db2']['db2_home'] %>/bin/db2fmcd
 Restart=always
 
 [Install]

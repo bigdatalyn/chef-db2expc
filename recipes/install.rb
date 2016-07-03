@@ -23,30 +23,42 @@ include_recipe 'selinux::disabled'
 installer = node['db2']['installer_file']
 nlpack    = node['db2']['nlpack_file']
 workdir   = node['db2']['working_dir']
-resp      = "#{workdir}/db2expc.rsp"
 
 case node['platform_family']
-when 'debian'
-  if node['platform_version'].to_i >= 14 then
-    execute 'dpkg --add-architecture i386' do
-      action :run
-    end
-  end
-  execute 'apt-get update' do
-    action :run
-  end
-  package ["binutils", "libaio1", "libpam0g", "libpam0g:i386", "libstdc++6", "libstdc++6:i386", "ksh"] do
-    action :install
-  end
-  if node['platform_version'].to_f == 12.04 then
-    link '/lib/libpam.so.0' do
-      to '/lib/i386-linux-gnu/libpam.so.0'
-      only_if { File.exists?("/lib/i386-linux-gnu/libpam.so.0") }
-    end
-  end
 when 'rhel'
   package ["libstdc++", "libaio", "pam", "cpp", "gcc", "gcc-c++", "kernel-devel", "sg3_utils", "ksh"] do
-    action :install
+    arch 'x86_64'
+  end
+  package ["libstdc++", "libaio", "pam"]  do
+    action :upgrade
+  end
+  package ["libstdc++", "libaio", "pam"]  do
+    arch 'i686'
+  end
+  case node['db2']['version']
+  when '11.1'
+    include_recipe 'ntp::default'
+  end
+when 'debian'
+  case node[:platform]
+  when 'ubuntu'
+    if node['platform_version'].to_i >= 14 then
+      execute 'dpkg --add-architecture i386' do
+        action :run
+      end
+    end
+    execute 'apt-get update' do
+      action :run
+    end
+    package ["binutils", "libaio1", "libpam0g", "libpam0g:i386", "libstdc++6", "libstdc++6:i386", "ksh"] do
+      action :install
+    end
+    if node['platform_version'].to_f == 12.04 then
+      link '/lib/libpam.so.0' do
+        to '/lib/i386-linux-gnu/libpam.so.0'
+        only_if { File.exists?("/lib/i386-linux-gnu/libpam.so.0") }
+      end
+    end
   end
 end
 
@@ -54,7 +66,7 @@ directory "#{workdir}" do
   action :create
 end
 
-template "#{resp}" do
+template "#{workdir}/db2expc.rsp" do
   owner 'root'
   group 'root'
   mode  '0644'
@@ -73,7 +85,7 @@ end
 
 execute 'install' do
   action :nothing
-  command "#{workdir}/expc/db2setup -r #{resp} -l #{node['db2']['installer_log']}"
+  command "#{workdir}/expc/db2setup -r #{workdir}/db2expc.rsp -l #{node['db2']['installer_log']}"
 end
 
 if node['db2']['nlpack_url']
