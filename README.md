@@ -6,8 +6,9 @@ Requirements
 - Chef 12+
 
 #### platforms
-- Red Hat Enterprise Linux 6 / 7
+- Red Hat Enterprise Linux 6+
 - Ubuntu 12.04+
+- SUSE 12
 
 #### Cookbooks
 - selinux

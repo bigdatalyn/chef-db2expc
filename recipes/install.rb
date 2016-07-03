@@ -18,14 +18,13 @@ unless node['db2']['installer_url']
   Chef::Application.fatal!("The installer_url attribute is required.")
 end
 
-include_recipe 'selinux::disabled'
-
 installer = node['db2']['installer_file']
 nlpack    = node['db2']['nlpack_file']
 workdir   = node['db2']['working_dir']
 
 case node['platform_family']
 when 'rhel'
+  include_recipe 'selinux::disabled'
   package ["libstdc++", "libaio", "pam", "cpp", "gcc", "gcc-c++", "kernel-devel", "sg3_utils", "ksh"] do
     arch 'x86_64'
   end
@@ -40,6 +39,7 @@ when 'rhel'
     include_recipe 'ntp::default'
   end
 when 'debian'
+  include_recipe 'selinux::disabled'
   case node[:platform]
   when 'ubuntu'
     if node['platform_version'].to_i >= 14 then
@@ -59,6 +59,10 @@ when 'debian'
         only_if { File.exists?("/lib/i386-linux-gnu/libpam.so.0") }
       end
     end
+  end
+when 'suse'
+  package ["libstdc++6", "libstdc++6-32bit", "pam", "pam-32bit", "cpp", "gcc", "gcc-c++", "kernel-source", "ksh"] do
+    action :install
   end
 end
 
